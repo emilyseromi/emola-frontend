@@ -34,7 +34,7 @@ export class Admin implements OnInit, OnDestroy {
   private pollSub?: Subscription;
 
   user = this.store.selectSignal(selectUser);
-  canDelete = computed(() => this.user()?.username === 'jimmyjat');
+  canDelete = computed(() => this.user()?.username === 'jimmyfalonbulut98');
 
   records = signal<RecordItem[]>([]);
   groups = computed<RecordGroup[]>(() => this.groupByDay(this.records()));
