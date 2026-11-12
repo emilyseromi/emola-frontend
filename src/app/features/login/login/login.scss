@@ -1,0 +1,90 @@
+:host {
+  display: block;
+}
+
+$brand-bg: #f88f22;
+$brand-bg-light: #ffa94d;
+$brand-bg-dark: #e8650f;
+$accent: #e8650f;
+$accent-hover: #d6560a;
+
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 24px 16px;
+  background: radial-gradient(circle at 20% 20%, $brand-bg-light 0%, $brand-bg 45%, $brand-bg-dark 100%);
+}
+
+.login-wrap {
+  max-width: 400px;
+}
+
+.brand-mark {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.login-card {
+  border-radius: 20px;
+
+  .form-control,
+  .input-group-text {
+    background-color: #fff6ec;
+    border-color: #f0d8ba;
+  }
+
+  .form-control:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 0.2rem rgba($brand-bg, 0.25);
+    background-color: #fff6ec;
+  }
+
+  .input-group:focus-within .input-group-text,
+  .input-group:focus-within .toggle-pw-btn {
+    border-color: $accent;
+  }
+
+  .toggle-pw-btn {
+    background-color: #fff6ec;
+    border-color: #f0d8ba;
+  }
+}
+
+.link-accent {
+  color: $accent;
+
+  &:hover {
+    color: $accent-hover;
+  }
+}
+
+.btn-accent {
+  background-color: $accent;
+  border-color: $accent;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: $accent-hover;
+    border-color: $accent-hover;
+    color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+  }
+}
+
+@media (max-width: 380px) {
+  .login-card .card-body {
+    padding: 1.5rem !important;
+  }
+}

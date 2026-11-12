@@ -1,0 +1,31 @@
+@if (isOpen()) {
+<!-- Overlay (Bootstrap backdrop, coloured #f88f22 at 50% in the SCSS) -->
+<div class="modal-backdrop show"></div>
+
+<!-- Clicking outside the card closes the modal -->
+<div class="modal d-block" (click)="close()">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg text-center">
+
+            <!-- Exit button (Font Awesome icon) -->
+            <button type="button"
+                class="btn btn-light rounded-circle close-btn position-absolute top-0 end-0 m-3 d-flex align-items-center justify-content-center"
+                aria-label="Fechar" (click)="close()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-body px-4 px-sm-5 pt-5 pb-4">
+                <!-- Icon -->
+                <div class="icon-circle mx-auto mb-3 d-flex align-items-center justify-content-center text-white">
+                    <i class="fa-solid fa-circle-info fs-3"></i>
+                </div>
+
+                <!-- Replace with any text you like -->
+                <h2 id="modal-title" class="h4 fw-bold mb-2">{{ title }}</h2>
+                <p id="modal-message" class="text-secondary mb-0">{{ message() }}</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+}

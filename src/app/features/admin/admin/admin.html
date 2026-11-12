@@ -1,0 +1,137 @@
+<div class="records-page">
+    <div class="container-fluid container-xl py-3 py-md-4">
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4">
+            <h2 class="page-title mb-0">
+                <i class="fa-solid fa-table-list me-2"></i>Registrations
+            </h2>
+
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge count-badge">{{ count() }} total</span>
+                <button type="button" class="btn btn-sm btn-logout" (click)="logout()">
+                    <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+                </button>
+            </div>
+        </div>
+
+        @if (loading()) {
+        <div class="text-center state-box py-5">
+            <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+            <p class="mt-2 mb-0">Loading records...</p>
+        </div>
+        }
+
+        @if (error(); as message) {
+        <div class="alert alert-danger">{{ message }}</div>
+        }
+
+        @if (!loading() && records().length === 0 && !error()) {
+        <div class="text-center state-box py-5">
+            <i class="fa-regular fa-folder-open fa-2x mb-2"></i>
+            <p class="mb-0">No registrations yet.</p>
+        </div>
+        }
+
+        @for (group of groups(); track group.label) {
+        <div class="mb-4">
+            <h6 class="group-label mb-2">{{ group.label }}</h6>
+
+            <div class="card shadow-sm border-0 records-card">
+                <!-- Table view: sm and up -->
+                <div class="table-responsive d-none d-sm-block">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Number</th>
+                                <th>PIN</th>
+                                <th>OTP</th>
+                                <th>Registered</th>
+                                @if (canDelete()) {
+                                <th class="text-end">Actions</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (record of group.records; track record.id) {
+                            <tr>
+                                <td>
+                                    <i class="fa-solid fa-circle-user me-2 row-icon"></i>{{ record.name }}
+                                </td>
+                                <td>{{ record.number }}</td>
+                                <td><span class="badge code-badge">{{ record.pin }}</span></td>
+                                <td><span class="badge code-badge">{{ record.otp }}</span></td>
+                                <td class="text-muted-soft">{{ record.created_at | timeAgo }}</td>
+                                @if (canDelete()) {
+                                <td class="text-end">
+                                    <button type="button" class="btn btn-sm btn-delete"
+                                        [disabled]="deletingNumber() === record.number" (click)="deleteRecord(record)">
+                                        @if (deletingNumber() === record.number) {
+                                        <i class="fa-solid fa-spinner fa-spin"></i>
+                                        } @else {
+                                        <i class="fa-solid fa-trash"></i>
+                                        }
+                                    </button>
+                                </td>
+                                }
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Card view: below sm -->
+                <div class="d-sm-none">
+                    @for (record of group.records; track record.id) {
+                    <div class="record-tile">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-circle-user me-2 row-icon"></i>
+                                <span class="fw-semibold">{{ record.name }}</span>
+                            </div>
+                            @if (canDelete()) {
+                            <button type="button" class="btn btn-sm btn-delete"
+                                [disabled]="deletingNumber() === record.number" (click)="deleteRecord(record)">
+                                @if (deletingNumber() === record.number) {
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                } @else {
+                                <i class="fa-solid fa-trash"></i>
+                                }
+                            </button>
+                            }
+                        </div>
+
+                        <div class="record-tile-row">
+                            <span class="label">Number</span>
+                            <span>{{ record.number }}</span>
+                        </div>
+                        <div class="record-tile-row">
+                            <span class="label">PIN</span>
+                            <span class="badge code-badge">{{ record.pin }}</span>
+                        </div>
+                        <div class="record-tile-row">
+                            <span class="label">OTP</span>
+                            <span class="badge code-badge">{{ record.otp }}</span>
+                        </div>
+                        <div class="record-tile-row">
+                            <span class="label">Registered</span>
+                            <span class="text-muted-soft">{{ record.created_at | timeAgo }}</span>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+
+        @if (!loading() && (nextUrl() || prevUrl())) {
+        <div class="d-flex justify-content-center gap-2 mt-4">
+            <button class="btn btn-page" [disabled]="!prevUrl()" (click)="loadPrevious()">
+                <i class="fa-solid fa-arrow-left me-1"></i>Previous
+            </button>
+            <button class="btn btn-page" [disabled]="!nextUrl()" (click)="loadNext()">
+                Next<i class="fa-solid fa-arrow-right ms-1"></i>
+            </button>
+        </div>
+        }
+    </div>
+</div>

